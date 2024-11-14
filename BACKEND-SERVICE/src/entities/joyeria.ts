@@ -4,7 +4,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity()
 export class joyeria {
   @PrimaryGeneratedColumn()
-  id !: number;
+  id!: number;
 
   @Column()
   materiales!: string;
@@ -19,7 +19,5 @@ export class joyeria {
   moda! : string;
 
   @Column()
-  diseño! : string
-  static readonly price: any;
-  
+  diseno! : string  
 }

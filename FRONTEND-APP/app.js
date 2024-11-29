@@ -1,73 +1,104 @@
-// importar los metodos de api.js  
-import { getjoyeria, getjoyeriaByID, updatejoyeria, deletejoyeria } from "./api";
-
-// traer todos los productos y mostrarlos en las pagina pricipal 
-document.addEventListener("DOMContentLoaded", async () => {
-    const joyerialist = document.getElementById("joyeria-list");
-
-    const products = await getjoyeria();
-joyerialist.innerHTML = products.map(joyeria =>`
-    <div class="col-xs-12-sm-6 col-md-3 card">
-        <div class="card-body d-flex flex-column justify-content-end">
-         <h5 class="card-title">${joyeria.name}</h5>
-         <p class="card-text">${joyeria.price}</p>
-         <a onclick="viewjoyeria(${joyeria.id})" class="btn btn-primary">ver mas</a>
-        </div
-    </div>
-    `).join("");
-    
-});
-
-// creae la vista de detalles para cada joyeria al dar click en el boton de ver mas 
-window.viewjoyeria = async (id) => {
-    const joyeria = await getjoyeriaByID(id);
-    const joyeriadelails = `
-    <div class="col">
-    <img class="img-fluid" src="${joyeria.imgurl}">
-    <h3>${product.name}</h3>
-      <p>${product.description}</p>
-      <p>Precio: ${new Intl.NumberFormat('en-ES', { style: 'currency', currency: 'USD' }).format(product.price)}</p>
-      <button class="btn btn-warning" onclick="enableEdit(${joyeria.id})">Editar</button>
-      <button class="btn btn-danger" onclick="deleteProduct(${joyeria.id})">Eliminar</button>
-    </div>
-    `
-   
-}
-document.getElementById('joyeria-list').innerHTML = joyeriaDetails;
-
-
-
-// Habilitamos el formulario para editar cada uno de las joyeria
-window.enableEdit = async (id) => {
-    const joyeria = await getjoyeriaByID(id);
-    const editForm = `
-      <div class="row gap-3">
-        <input type="text" id="name" value="${joyeria.name}">
-        <textarea id="description">${joyeria.description}</textarea>
-        <input type="number" id="price" value="${joyeria.price}">
-        <input type="text" id="imgUrl" value="${joyeria.imgUrl}">
-        <button class="btn btn-success" onclick="saveEdit(${id})">Guardar</button>
+<!DOCTYPE html>
+<html lang="es">
+<head
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOYERIA📿💎</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+  <!--MENU APLICACIONES -->
+  <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">JOYERIA📿💎</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="index.html">catalogo</a>
+          </li>
+         
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              menu de opciones 
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item active" href="add-joyeria.html">agregar accesorio </a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
-      `;
-    document.getElementById('joyeria-list').innerHTML = editForm;
-};
+    </div>
+  </nav>
+
+  estoy en el formulario para agregar la joyeria
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/app.js"></script>
+  
+</body>
+</html>
+
+<div class="row">
+  <div class="col">
+    <form id="product-form">
+      <!-- Campo ID (Opcional: si quieres que el formulario acepte un ID) -->
+      <div class="mb-3">
+        <label for="id" class="form-label">ID del producto</label>
+        <input type="number" class="form-control" id="id" placeholder="ID del producto" required>
+      </div>
+
+      <!-- Campo de Descripción -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Descripción</label>
+        <textarea class="form-control" id="description" placeholder="Descripción del producto" required></textarea>
+      </div>
+
+      <!-- Campo de Precio -->
+      <div class="mb-3">
+        <label for="price" class="form-label">Precio</label>
+        <input type="number" class="form-control" id="price" placeholder="Precio del producto" required>
+      </div>
+
+      <!-- Campo de Imagen -->
+      <div class="mb-3">
+        <label for="imgUrl" class="form-label">Imagen del Producto</label>
+        <input type="text" class="form-control" id="imgUrl" placeholder="URL de la imagen del producto" required>
+      </div>
+
+      <!-- Campo de Moda -->
+      <div class="mb-3">
+        <label for="moda" class="form-label">Moda</label>
+        <input type="text" class="form-control" id="moda" placeholder="Tipo de moda" required>
+      </div>
+
+      <!-- Botón de Enviar -->
+      <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+  </div>
+</div>
 
 
-// Guardamos la nueva información en nuestra base de datos
-window.saveEdit = async (id) => {
-    const updatedjoyeria = {
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script type="module" src="js/api.js"></script>
+<script type="module">
+  import { addjoyeria } from './js/api.js';
+  // Guardar Formulario de agregar producto en base de datos
+  document.getElementById('joyeria-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const newjoyeria = {
       name: document.getElementById('name').value,
       description: document.getElementById('description').value,
       price: parseFloat(document.getElementById('price').value),
-      imgUrl: document.getElementById('imgUrl').value
+      imgUrl: document.getElementById('imgUrl').value,
+      moda: document.getElementById('moda').value,
+      id: document.getElementById('id').value,
+
+
     };
-    await updateProduct(id, updatedjoyeria);
-    location.reload();
-}
-
-// Función para borrar el producto de la joyeria  seleccionado
-window.deletejoyeria = async (id) => {
-    await deletejoyeria(id);
-    location.reload(); 
-  };
-
+    await addjoyeria(newjoyeria);
+    window.location.href = 'index.html'; 
+  });
+</script>

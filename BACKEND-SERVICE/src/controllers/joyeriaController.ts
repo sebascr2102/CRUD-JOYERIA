@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { joyeria, } from "../entities/joyeria";
@@ -95,10 +94,13 @@ export const createjoyeria= async(req: Request, res: Response) => {
   try {
     const { moda, description, price, imgUrl } = req.body;
     const joyeria = new moda (moda, description, price, imgUrl);
+    joyeria.id = 
     joyeria.name = moda;
     joyeria.description = description;
     joyeria.price = price;
-    joyeria.imgUrl = imgUrl; // <----- Aquí va la nueva línea
+    joyeria.moda = moda
+    joyeria.imgUrl = imgUrl; 
+    // <----- Aquí va la nueva línea
     await productRepository.save(joyeria);
     res.status(201).json(joyeria);
   } catch(error) {
@@ -120,6 +122,7 @@ export const updatejoyeria = async(req: Request, res: Response) => {
 
     // Validamos que product tenga información
     if (joyeria) {
+      joyeria.id
       joyeria.name= name ?? joyeria.name;
       joyeria.description = description ?? joyeria.description;
       joyeria.price= price ?? joyeria.price;

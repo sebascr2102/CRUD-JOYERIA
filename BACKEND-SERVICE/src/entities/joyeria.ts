@@ -1,25 +1,19 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-
 @Entity()
-export class joyeria {
+export class joyeria{
   @PrimaryGeneratedColumn()
-  id !: number;
+  id!: number;
 
   @Column()
-  materiales!: string;
+  name!: string;
 
   @Column("text")
   description!: string;
 
   @Column("decimal")
-  precio!: number ;
+  price!: number;
 
-  @Column()
-  moda! : string;
-
-  @Column()
-  diseño! : string
-  static readonly price: any;
-  
+  @Column("text")
+  imgUrl!: string;
 }
